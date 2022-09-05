@@ -1,0 +1,68 @@
+DOCKERIZATION:
+	
+Infrastructure:
+	*The basic configuration in the server is called "Infrastructure". Eg:Hardware,OS,Apps
+
+=>Dockerization is same as server.
+	*We can place Hareware on top of that we can place OS and on top that we can run application. So it works as Server.
+=>Docker container runs on host OS.
+=>We cannot run the docker directly on hardware.
+=>Docker runs on guest OS which is placed on hardware.
+=>Container works like a VLC player or Acrobat reader or any other application.
+=>We can map basic hardware components like CPU, RAM, etc... to the container.
+
+RESOURCE UTILIZATION:
+	*Basically the resources are fetched by the Docker Engine from the core hardware.
+	*On top this Docker Engine, we can run the containers how many ever we want.
+	*So this core hardware become virtual hardware to run the containers which are on Docker Engine.
+	*The main component or back bone of the OS is "Kernal".
+	*So this kernal takes the signal from Docker Engine to get the resources from the core hardware through OS. So core hardware will allocate the required resources to the Docker as virtual hardware.
+	*Docker further allocate the resources to the containers.
+	*The Dockerization is used for infrastructe management and resource optimization.
+	*we have already physical servers, VM vares and cloud to optimize the resources but this dockerization optimizing the resources perfectly.
+
+=>If we take a server1, 
+		Hardware ===========> OS ==========> VM Workstation ============> VMs
+		(Bottom)                                                         (Top)
+
+		=>The resource usage functionality and resource utilization is same as the physical hardware.
+		=>Actually OS uses max resources to run the application becuase in backend unnecessary configurations might run.
+		=>20-30% of resources used by OS.
+
+=>If we take a server2,
+		Hardware ===========> OS ==========> Docker Engine ============> Containers
+		(Bottom)                                                           (Top)
+
+		=>Docker will not use resource completely as VM used.
+		=>Actually it will utilize required resouces to run the container. It will not utilize the resource for unnecessary configuration.
+		=>Here 2-3% of resources used to run the container.
+		=>That is the reason the "Dockerization" has more optimizaton.
+
+		For Example:
+			*OS Image size in VM - 4GB 
+			*OS Image size in Docker - 180MB
+		*The main reason for this less memory allocation in the Docker image is that only binary packages are available in the Docker.
+		*Many number of packages will be available in the VM like centOS.
+
+=>In the application point of view Docker Container Works as a physical server.
+=>In OS point of view VM works as physical server but Docker container will not work as physical server.
+=>The main reason behind this is that the resource used by the container is based on the application activation. If we activate container1 for App1, so it will utilize only the required resources which is used by the App1 not more then that.
+
+NOTE:
+=>Basically as per below picture, If we use the clusters like FT,DRS,HA to connect the different servers which are configured with the VMs any server down due to some issues the VMs in failed server will run on the other servers. So all are considered this is the best solution.
+	/home/pradeep/Pictures/Screenshot from 2022-07-26 16-33-55.png
+=>But the Dockerization is considering as best solution. If we use the Kubernetes or Docker Swarm to connect the different servers which are configured with the containers any server down due to some issues the containers in failed server will run on the other servers with less utilization of resources.
+	/home/pradeep/Pictures/Screenshot from 2022-07-26 16-45-59.png
+
+
+MICROSERVICES AND MONOLITHIC:
+	*Actually 6 years back IRCTC used the Monolithic service to run the app. But eventually it becomes Microservice due to server down issue.
+	*If the server down happend when we use Monolithic we were unable to proceed further to book a ticket, we dont know what's happening behind.
+	*It will take 20-30 minutes to come to actual working, basically it is becuase of heavy load.
+	*To overcome this issue, we are introducing the Microservices.
+	*Example for Microservices is Amazon, Flipkart, etc..
+
+	NOTE:
+	=>To run these Microservices, the perfect solution is Dockerization.
+	=>For example E-Commerce websites, If the customers are increasing we might face a server down. To overcome this issue we can use these Docker to "Auto Scale"
+	

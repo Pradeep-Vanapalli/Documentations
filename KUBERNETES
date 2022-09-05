@@ -1,0 +1,86 @@
+KUBERNETES
+*we can call this as k8s
+
+k8s History:
+*Greek word - "Helmsman | pilot"
+*In the initial stages k8s used by Google Borg Systems for cluster management
+*Borg systems project started witb C++ language. And the same project logic redisigned with Go language in k8s.
+*k8s v1.0 - July 2015
+*k8s v1.19 - August 2020 latest version
+*k8s invented by Google but maintained by CNCF
+*The same k8s available from all cloud providers but the names of k8s are different 
+		1.GCP - GKE
+		2.AWS - AKS
+		3.Azure - EKS
+	*In all cloud platforms, the functionality is same.
+
+WHAT IS K8S?
+*k8s is open source container orchestation tool.
+*It is used for Deployment, Sclaing and Management of containers
+*The main reason for implementation of k8s is 'Hardware Customization(Virtual)'
+
+WHAT IS CONTAINER?
+*A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
+*Basically it is a type of server but not exactly server.
+*Actaully it is functional requirement to server.
+*It enables a few resources not as server enables all resources.
+
+
+PHYSICAL SERVER:
+*Image path: /home/pradeep/Pictures/Screenshot from 2022-07-15 14-14-43.png
+*In server,
+	
+	HARDWARE ========> OS =======> APP1,APP2....APPn
+	(Bottom)						   (Top)
+
+*To run the all applications in the server there is some Memory wastage in the Operating System. Eg. HDD-40GB, RAM-2GB
+
+VIRTUAL SERVER:
+*Image path: /home/pradeep/Pictures/Screenshot from 2022-07-15 14-14-43.png
+ 
+
+	HARDWARE ========> ESXI(Hypervisar) =======> OS1,OS2...OSn =======> APP1,APP2....APPn
+	(Bottom)		   (Virtualization)		   								(Top)
+
+*Virtual Hardware should provide the same memory how the physical hardware provides to default OS.
+
+DOCKER WORKING:
+*/home/pradeep/Pictures/Screenshot from 2022-07-15 15-48-41.png
+
+	HARDWARE ========> OS =======> DOCKER ========> CONTAINER1,CONTAINER2,....,CONTAINERn
+	(Bottom)						   					(Top)
+
+*In the OS level docker treats as an application.
+*In the Hardware level, the docker sends a request to provide the memory to run the application. Accordingly it works.
+*We can create container upto some level. Becuase hardware need to fulfill the requirement.	
+
+NOTE:
+*If anything like hardware, server filed - Then k8s functionality will manage.
+*If any node fails in the server respective container will moved to respected OS.
+	Eg:Event Management for function
+		case1:Food Preparation - we made deal with 20 persons to come and cook but 10 persons shortage on that day. So as an event manager i might not be able to manage multiple things
+		case2:To avoid case1, i have given order to catering so they will deliver on time. I can manage other things.
+
+	Conclusion: In the same way, if 50% of the nodes fail it will automatically run the available nodes. That means it will completely manges the all resources. i.e. orchestation.
+
+ARCHITECTURE:
+*Image Path: /home/pradeep/Pictures/Screenshot from 2022-07-18 15-13-50.png
+	Master Node:
+		- Kube API Server: If we configure the k8s in the server, Kube API Server will take the instructions from command line or Interface and it passes that instruction to Kube Schedular to work on 				   that.
+
+		- Kube Scheduler: For example, the instruction is to create a container. So it decides where to create the container and also available all the information about the container.
+
+		- etcd : In this, available the complete information of Master node and worker node.
+
+		- Kube Control Manager : It controls the whole functionality. For example, if any node fails it will get the notification as so and so node got failed. So it passes the same instruction to Kube 						   Scheduler. Then Kube Scheduler will move the containers which are working on failure nodes to properly working nodes.
+
+		Note:If we pass the instruction as required container on worker node, that instruction passes to the Kube API server and the Kube Scheduler. So Scheduler will create the container in worker node.
+
+	Worker Node:
+		- Kubelet: For example, If the insruction is required container on worker node: then the Kube scheduler pass the information to Kubelet which is in worker node. So it creates the pod and in that 			  pod it creates the container. And also if the kubelet created 2 pods with container in each pod, it will enable the communication between two continers as well.
+
+				   And if any container or node failed in the worker node, the kubelet passes the information to Kube control manager.
+
+		- Kube Proxy: If we want to establish any internet service in the any pod or if we want to make a communication between 2 worker nodes, this Kube proxy will establish.
+
+

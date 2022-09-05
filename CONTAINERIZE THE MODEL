@@ -1,0 +1,68 @@
+DOCKER INSTALLATION:
+	=>sudo apt-get update
+	=>sudo apt-get remove docker docker-engine docker.io
+					or 
+	=>sudo apt-get install docker.io
+	=>sudo apt install docker.io
+
+START AND ENABLE THE DOCKER SERVICE:
+	=>sudo systemctl start docker
+	=>sudo systemctl enable docker
+
+DOCKERFILE CREATION FORMAT:
+*We need create file without any extension with below commands.
+	FROM python:3.7
+	CMD python -m pip install --upgrade pip
+	RUN pip install joblib
+	RUN pip install numpy
+	RUN pip install scipy 
+	RUN pip install scikit-learn
+	RUN pip install tensorflow
+	RUN pip install matplotlib
+	RUN pip install pillow
+	RUN pip install imutils
+	RUN pip install opencv-python
+	RUN apt-get update && apt-get install -y python3-opencv
+	RUN pip install opencv-python
+	WORKDIR /fr-docker
+	COPY . ./fr-docker
+	CMD ['python3', './fr-docker/data/script/generate_data.py']
+
+
+HOW TO BUILD AN IMAGE:
+	=>docker build -t <tag_name> -f <Dockerfile> .
+
+HOW TO RUN THE PYTHON FILE IN DOCKER IMAGE:
+	=>xhost local:docker 
+	=>sudo docker run -it --rm --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --device="/dev/video0:/dev/video0" fr-docker python ./fr-docker/live_recognition.py
+
+HOW TO SAVE AND LOAD DOCKER IMAGE IN THE LOCAL MACHINE:
+	=>docker save <docker image name> | gzip > <docker image name>.tar.gz
+	=>zcat <docker image name>.tar.gz | docker load
+    Ref Link: https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-using-a-repository
+
+HOW TO CREATE DOCKER IMAGE FILE IN THE REMOTE HOST:
+	=>docker save <image> | bzip2 | ssh user@host docker load
+	=>docker save <image> | bzip2 | pv | ssh user@host docker load - to check how the trasfer is going
+	Ref Link: https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-using-a-repository
+                                         (OR)
+    =>scp file.txt remote_username@10.10.0.2:/remote/directory - to transfer or copy the files from local to remote server
+    =>We need to copy Dockerfile and the python files to the server.
+    =>We need to build the docker image in the server by using the Dockerfile.
+    =>We can run the docker.
+    	Error: Received error as "The TensorFlow library was compiled to use SSE4.1 instructions, but these aren't available on your machine."
+    	Sol Link: https://github.com/lakshayg/tensorflow-build
+
+HOW TO RUN CREATED IMAGE IN THE SERVER:
+	=>docker run <docker_image_name>
+
+
+
+TUTORAIL LINKS:
+*https://towardsdatascience.com/build-and-run-a-docker-container-for-your-machine-learning-model-60209c2d7a7f
+*https://www.analyticsvidhya.com/blog/2021/06/a-hands-on-guide-to-containerized-your-machine-learning-workflow-with-docker/
+
+SAVE AND LOAD IMAGES:
+*https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-using-a-repository
+
+

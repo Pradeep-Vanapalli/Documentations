@@ -1,0 +1,257 @@
+SQL
+WHAT IS DATABASE?
+*A database is a collection of datastored in a format that can easily be accessed.
+*In order to maintain a database we use software application called DBMS(Database Management System).
+	
+		USER ===================> DBMS ================> EXECUTION
+		(We)				 (Intermediate)  	(Modifying or Querrying a data as per user requirement: done by DBMS)
+
+TYPES OF DATABASE:
+1.Relational
+	=>In this, we store the data in tables that are linked to each other using relationships.
+	=>Each table will store the data about a specific type of object like customer, product or Orders.
+	=>SQL is the language that we use to work with RDBMS.
+	=>We have different RDMS as below,
+		*MySQL
+		*SQL Server
+		*Oracle
+
+2.Non Relational or NoSQL
+	=>NoSQL systems dont understand the SQL. 
+	=>They have their own query language.
+
+SQL AND MYSQL:
+=>SQL is a query programming language that manages RDBMS. 
+=>MySQL is a relational database management system that uses SQL. 
+=>SQL is primarily used to query and operate database systems. 
+=>MySQL allows you to handle, store, modify and delete data and store data in an organized way.
+
+STATEMENTS:
+ SELECT:
+ =>USE 'database name'; - To select the database
+ =>SELECT * FROM 'table name'; - To select the all columns from the table
+ =>SELECT column1, column2, column3 FROM 'table name'; - To select required columns from the table
+ =>SELECT column1, column2, column3, column3*10+100 FROM 'table name'; - To add the new column with the arthematic operation
+ =>SELECT column1, column2, column3, column3*10+100 as column4 FROM 'table name'; - To name the column3*10+100 as column4
+ =>SELECT column1, column2, column3, column3*10+100 as 'column 4' FROM 'table name'; - To name the column3*10+100 as column4, need to keep that name in quotes. Because we have a space.
+ =>SELECT DISTINCT column1 FROM 'table name'; - To avoid the common values or duplicates in that column.
+
+ WHERE operator:
+ =>This is to filter the data.
+ =>We have different operators as below,
+ 	> - Graeter then operator       Eg: Eg: SELECT * FROM Customers WHERE birth_date > '1990-02-03';
+ 	< - Less then operator
+ 	= - equal to       				Eg: SELECT * FROM Customers WHERE state = 'VA';
+ 	>= - Graeter then or equal to
+ 	<= - Less then or equal to
+ 	!= - not equal to               Eg: SELECT * FROM Customers WHERE state != 'VA';
+ 	<> - not equal to               Eg: SELECT * FROM Customers WHERE state <> 'VA';
+
+ AND, OR, NOT OPERATORS:
+ 	OR:
+ 	=>SELECT * FROM Customers WHERE birth_date > '1990-01-01' OR points > 1000 - To get the result of data more then the date or points more then 1000
+
+ 	AND:
+ 	=>SELECT * FROM Customers WHERE birth_date > '1990-01-01' OR points > 1000 AND state = 'VA'
+ 									or
+ 	=>SELECT * FROM Customers WHERE birth_date > '1990-01-01' OR (points > 1000 AND state = 'VA')
+
+ 	NOT:
+ 	=>SELECT * FROM Customers WHERE NOT (birth_date > '1990-01-01' OR points > 1000)
+ 		*Here when we apply NOT operator, > becomes <= and OR becomes AND
+
+
+IN operator:
+=>SELECT * FROM Customers WHERE state IN ('VA', 'FL', 'GA')
+	Note: We can write this OR operator as well but to reduce the size of the query we use IN operator.
+		  =>SELECT * FROM Customers WHERE state = 'VA', state = 'FL', state = 'GA'
+=>SELECT * FROM Customers WHERE state NOT IN ('VA', 'FL', 'GA')
+
+BETWEEN operator:
+=>SELECT * FROM Customers WHERE points BETWEEN 1000 AND 3000
+	Note: We can write this '>= AND <=' operator as well but to reduce the size of the query we use BETWEEN operator.
+		  =>SELECT * FROM Customers WHERE points >= 1000 AND points <= 3000
+
+LIKE operator:
+=>SELECT * FROM Customers WHERE last_name LIKE 'b%' - To get last_name starts with b or B.
+=>SELECT * FROM Customers WHERE last_name LIKE '%b' - To get last_name ends with b or B.
+=>SELECT * FROM Customers WHERE last_name LIKE '%b%'- To get last_name with b letter.
+=>SELECT * FROM Customers WHERE last_name LIKE '_b' - To get the letter ends with b.
+	Note: '%' represents Any number of charecters
+		  '_' represents single charecters
+
+REGEXP operator:
+=>SELECT * FROM Customers WHERE last_name REGEXP 'field' - To get last_name with 'field'
+=>SELECT * FROM Customers WHERE last_name REGEXP '^field'- To get last_name starts with 'field'
+=>SELECT * FROM Customers WHERE last_name REGEXP 'field$'- To get last_name ends with 'field'
+=>SELECT * FROM Customers WHERE last_name REGEXP 'field|mac|rose' - To get last_name having field and mac and rose.
+=>SELECT * FROM Customers WHERE last_name REGEXP '^field|mac|rose'- To get last_name starts with field and mac and rose.
+=>SELECT * FROM Customers WHERE last_name REGEXP 'field$|mac$|rose$' - To get last_name ends with field and mac and rose.
+=>SELECT * FROM Customers WHERE last_name REGEXP '[gim]e' - To get last_name having 'ge' or 'ie' or 'me'
+=>SELECT * FROM Customers WHERE last_name REGEXP 'e[gim]' - To get last_name having 'eg' or 'ei' or 'em'
+=>SELECT * FROM Customers WHERE last_name REGEXP '[a-h]y' - To get last_name having 'ay','by','cy'.....'hy'
+
+IS NULL operator:
+=>SELECT * FROM Customers WHERE phone_number IS NULL
+=>SELECT * FROM Customers WHERE phone_number IS NOT NULL
+
+ORDER BY Clause:
+=>SELECT * FROM Customers ORDER BY last_name - To arrange the data in Ascending order.
+=>SELECT * FROM Customers ORDER BY last_name DESC- To arrange the data in Descending order.
+=>SELECT * FROM Customers ORDER BY state, last_name - To sort the multiple columns
+=>SELECT * FROM Customers ORDER BY state DESC, last_name DESC - To sort the multiple columns in Descending order.
+=>SELECT first_name, last_name 	FROM Customers ORDER BY	birth_date - To sort the selected columns by using other column.
+=>SELECT first_name, last_name, 10 AS points FROM Customers ORDER BY points, first_name - To add the data as 10 in all rows of points and sortening the points and first_name in Ascending order.
+=>SELECT first_name, last_name, 10 AS points FROM Customers ORDER BY 1, 2 - To add the data as 10 in all rows of points and sortening the points and first_name in Ascending order by using the serial number 1 and 2.
+
+LIMIT Clause:
+=>SELECT * FROM Customers LIMIT 3 - To select the first 3 records
+=>SELECT * FROM Customers LIMIT 6, 3 - To skip first 3 records and then select 3 records after 6 records.
+=>SELECT * FROM Customers ORDER BY points DESC LIMIT 3 - To get the top 3 loyal customers
+
+INNER JOINS:
+* To put the tables next to each other, we can use this INNER JOINS.
+NOTE: If we use JOIN, by defualt it considers as INNER JOIN.
+=>SELECT * FROM Orders JOIN Customers ON Orders.customer_id = Customers.customer_id - To put the orders and customers tabes next to each other on the basis of customer_id.
+=>SELECT order_id, first_name, last_name FROM Orders JOIN Customers ON Orders.customer_id = Customers.customer_id - To select the particualr columns from the two tables.
+=>SELECT order_id, orders.customer_id, first_name, last_name FROM orders JOIN Customers ON Orders.customer_id = Customers.customer_id - To select the customer_id from particular table if both are having.
+=>SELECT order_id, O.customer_id, first_name, last_name FROM orders O JOIN Customers C ON O.customer_id = C.customer_id -  To select the customer_id from particular table if both are having.
+		Note: O and C assigned and used as short variable to mininmize the query size - Alias names
+
+JOINING ACROSS DATABASES:
+=>SELECT FROM Order_Items oi JOIN sql_inventory.products p ON oi.product_id = p.product_id - To join two tables from different databases.
+=>USE sql_inventory;
+  SELECT * FROM sql_store.order_items oi JOIN products p ON io.product_id = p.product_id - To join two tables from different databases.
+
+SELF JOINS:
+*We can join the table with itself.
+=>USE sql_hr;
+  SELECT * FROM employees e JOIN employees m ON e.reports_to = m.employee_id - To join the employee and reports_to which person.
+
+=>USE sql_hr;
+  SELECT e.employees, e.first_name, m.first_name AS manager FROM employees e JOIN employees m ON e.reports_to = m.employee_id - To join the employee and reports_to which person by selecting particular columns
+
+JOINING MULTIPLE TABLES:
+=>USE sql_store;
+  SELECT * FROM Orders o JOIN Customers c ON o.customer_id = c.customer_id JOIN order_statuses os ON o.status = os.order_status_id - To join more then 3 tables
+
+=>USE sql_store;
+  SELECT o.order_id, o.order_date, c.first_name, c.last_name, os.name AS status FROM Orders o JOIN Customers c ON o.customer_id = c.customer_id JOIN order_statuses os ON o.status = os.order_status_id - To select particular columns from 3 tables
+
+=>USE sql_invoicing;
+  SELECT * FROM payments p JOIN clients c ON p.client_id = c.client_id JOIN payment_methods pm ON p.payment_method = pm.payment_method_id
+
+=>USE sql_invoicing;
+  SELECT p.date, p.invoice_id, p.amount, c.name, pm.name FROM payments p JOIN clients c ON p.client_id = c.client_id JOIN payment_methods pm ON p.payment_method = pm.payment_method_id
+
+COMPOUND JOIN CONDITIONS:
+=>SELECT * FROM orders_items oi JOIN order_items_notes oin ON oi.order_id = oin.order_id AND oi.product_id = oin.product_id - To select the columns based on two conditions called compound JOIN.
+
+IMPLICIT JOIN SYNTAX:
+=>SELECT * FROM orders o JOIN Customers c ON o.customer_id = c.customer_id - This is the actual Querrying.
+=>SELECT * FROM orders o JOIN Customers c WHERE O.customer_id = c.customer_id - Using WHERE Clause instead of ON, called Implicit JOIN
+NOTE: *If we forget to add WHERE clause each table will join to each record in the other table will create duplicate tables. This means Cross JOIN will happen.
+	  *Mostly we should avoid using Implicit JOIN and use Explicit JOIN.
+
+OTHER JOINS:
+	OUTER JOIN:
+	=>SELECT c.customer_id, c.first_name, o.order_id FROM Customers c JOIN orders o ON c.customer_id = o.customer_id ORDER BY customer_id - Basically this is as an INNER JOIN. From this we can get the records which are having orders but we cannot get the which are not having oredrs. So in this case, to get all the records we use OUTER JOIN
+		LEFT JOIN:
+		*It will select the all the records from the left table and join the other table with all records.
+		=>SELECT * FROM Customers c LEFT JOIN orders o ON c.customer_id = o.customer_id ORDER BY c.customer_id - select the all the records from the left table(customers table) and join the other table(orders table) with all records.
+
+		RIGHT JOIN:
+		=>SELECT * FROM Customers c RIGHT JOIN orders o ON c.customer_id = o.customer_id ORDER BY c.customer_id - Basically it works as normal INNER JOIN. select the all the records from the right table(orders table) but not null records and join the other table(customers table) with all records.
+		* If we change the table names in the query it will give exact results however we want.
+		=>SELECT * FROM orders o RIGHT JOIN Customers c ON c.customer_id = o.customer_id ORDER BY c.customer_id - select the all the records from the right table(customers table) records and join the other table(orders table) with all records.
+		NOTE: If we are using the LEFT or RIGHT JOIN, that means we are using the OUTER JOIN by defualt. No need to mention as LEFT OUTER JOIN or RIGHT OUTER JOIN.
+
+OUTER JOIN BETWEEN MULTIPLE TABLES:
+=>SELECT c.customer_id, c.first_name, o.order_id FROM Customers c LEFT JOIN orders o ON c.customer_id = o.customer_id JOIN shippers sh ON o.shipper_id = sh.shipper_id ORDER BY customer_id - This is OUTER JOIN with INNER JOIN. It will select the value which are not null in the shipper_id column.
+=>SELECT c.customer_id, c.first_name, o.order_id, sh.name AS shipper FROM Customers c LEFT JOIN orders o ON c.customer_id = o.customer_id LEFT JOIN shippers sh ON o.shipper_id = sh.shipper_id ORDER BY customer_id - This is OUTER JOIN with INNER JOIN. It will select the value including null in the shipper_id column.
+NOTE: When we are using the OUTER JOINS to JOIN multiple tables, the best practice is to avoid RIGHT JOIN and use LEFT JOIN to understand and visualize how we have joined the tables.
+
+SELF OUTER JOIN:
+=>USE sql_hr;
+  SELECT e.employee_id, e.first_name, m.first_name AS manager FROM employees e JOIN employees m ON e.reports_to = m.employee_id - To select the names of employees and their managers but it will not give any result about the manager's manager results
+
+ =>USE sql_hr; 
+  SELECT e.employee_id, e.first_name, m.first_name AS manager FROM employees e LEFT JOIN employees m ON e.reports_to = m.employee_id - To select the names of employees and their managers including the manager's manager results
+  
+THE USING Clause:
+=>SELECT o.order_id, c.first_name FROM orders o JOIN Customers c ON o.customer_id = c.customer_id - This is basically the actual query using 'ON', but we can replce with USING Clause.
+=>SELECT o.order_id, c.first_name FROM orders o JOIN Customers c USING (customer_id) -  this is shorter and easier(for 2 tables)
+=>SELECT o.order_id, c.first_name, sh.name shipper FROM orders o JOIN Customers c USING (customer_id) JOIN shippers sh USING (shipper_id) - this is shorter and easier(for 3 tables)
+=>SELECT o.order_id, c.first_name, sh.name shipper FROM orders o JOIN Customers c USING (customer_id) JOIN shippers sh USING (shipper_id) - this is shorter and easier(for 3 tables) using outer join
+=>SELECT * FROM orders_items oi JOIN order_items_notes oin ON oi.order_id = oin.order_id AND oi.product_id = oin.product_id - This is basically the actual query using 'ON', but we can replce with USING Clause.
+=>SELECT * FROM orders_items oi JOIN order_items_notes oin USING (order_id, product_id) - this is easy way to join by using USING.
+
+NOTE: We can use the 'USING' clause if the cloumns names are in both the tables are same but the column names are different we should use the 'ON'
+=>USE sql_invoicing;
+  SELECT p.date, c.name as client, p.amount, pm.name AS payment_method FROM payments p JOIN clients c USING (clinet_id) JOIN payment_methods pm ON p.payment_method = pm.payment_method_id
+
+NATURAL JOINS:
+*This is used to JOIN the tables which are having common columns but not the columns having the same name. It is not recommended Because they guess the common columns and JOIN and we cannot have any control over it.
+=>SELECT o.order_id, c.first_name FROM orders O NATURAL JOIN Customers C 
+
+CROSS JOINS:
+* This is used to join each record in the table to each record in the other table.
+=>SELECT c.first_name AS customer, p.name AS product FROM Customers C, Orders o ORDER BY c.first_name
+=>SELECT sh.name AS shipper, p.name AS product FROM shippers sh, products p ORDER BY sh.name - This is common CROSS JOIN to join all shippers with all products
+=>SELECT sh.name AS shipper, p.name AS product FROM shippers sh CROSS JOIN products p ORDER BY sh.name - This is explict syntax for cross join. Mostly we should prefer this syntax.
+
+UNIONS:
+*This is used to combine the records or rows in the one table or multiple tables.
+=>SELECT order_id, order_date, 'ACTIVE' as status FROM orders WHERE order_date >= '2019-01-01'
+=>SELECT order_id, order_date, 'ARCHIVED' as status FROM orders WHERE order_date < '2019-01-01'
+ 
+ The above 2 querries can be write in one query by using UNION operator as below
+ =>SELECT order_id, order_date, 'ACTIVE' as status FROM orders WHERE order_date >= '2019-01-01' UNION SELECT order_id, order_date, 'ARCHIVED' as status FROM orders WHERE order_date < '2019-01-01'
+ =>SELECT first_name from customers UNION SELECT name FROM shippers
+ Note: It will select the column from the first query.
+ Note: When we are using UNION, in the both tables should select equal number of columns.
+ =>SELECT first_name, last_name FROM Customers UNION SELECT name FROM shippers - It will throw an error. columns should be equal in both the tables.
+ =>SELECT customer_id, first_name, points, 'Bronze' as type FROM Customers WHERE points < 2000 UNION SELECT customer_id, first_name, points, 'Silver' as type FROM Customers WHERE points BETWEEN 2000 AND 3000 UNION SELECT customer_id, first_name, points, 'Gold' as type FROM Customers WHERE points > 3000 ORDER BY first_name
+
+COLUMN ATTRIBUTS: 
+* Just understand the primary key, foriegn key and other things.
+
+INSERT:
+	Inserting Single Row:
+	=>INSERT INTO customers VALUES (defualt, 'John', 'Smith', '1995-08-28', NULL, 'address', 'city', 'AP', defualt) - This query is used to insert all the columns with the values accordingly.
+	=>INSERT INTO customers (first_name, last_name, birth_date, address, city, state) VALUES ('John', 'Smith', '1995-08-28', 'address', 'city', 'AP') - To insert the values into selected columns
+	Inserting Multiple Rows:
+	=>INSERT INTO shippers (name) VALUES (shipper1), (shipper2), (shipper3) - To add the multiple rows in one go.
+	=>INSERT INTO products (name, quantity_in_stock, unit_price) VALUES ('product1', 10, 1.95), ('product2', 11, 1.45), ('product3', 12, 1.97) - To add the multiple rows for multiple columns
+	Inserting Hierarchical Rows:
+	=>INSERT INTO orders (customer_id, order_date, status) VALUES (1, '2019-02-01', 1);
+	  INSERT INTO order_items VALUES (LAST_INSERT_ID(), 1, 1, 2.95), (LAST_INSERT_ID(), 2, 1, 3.95)
+
+CREATE COPY OF TABLES:
+=>CREATE TABLE Orders_Archived AS SELECT * FROM orders - To create a copy of table from orders.
+=>INSERT INTO Orders_Archived SELECT * FROM orders WHERE order_date < '2019-01-02' - To copy the data from the selected table.
+=>USE sql_invoicing;
+  CREATE TABLE invoice_archived AS SELECT i.invoice_id, i.number, c.name AS client, i.invoice_total, i.payment_total, i.invoice_date, i.payment_date, i.due_date FROM invoices i JOIN clients c USING client_id WHERE payment_date IS NOT NULL 
+
+UPDATING A SINGLE ROW:
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date WHERE invoice_id = 1
+=>UPDATE invoices SET payment_total = 30, payment_date = '2019-10-10' WHERE invoice_id = 2
+
+UPDATING MULTIPLE ROWS:
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date WHERE client_id IN (3,4,6)
+=>USE sql_store UPDATE customers SET points = points + 50 WHERE birth_date < '1990-01-01'
+
+USING SUBQUERRIES IN UPDATES:
+*A subquery is the select statement that is with in another sql statement.
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date WHERE client_id = (SELECT client_id FROM clients WHERE name = 'Myworks')
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date WHERE client_id IN (SELECT client_id FROM clients WHERE state IN ('CA','NY')) - It will execute the subquery first and then the sql query.
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date SELECT * FROM invoices WHERE payment_date IS NULL
+												(OR)
+=>UPDATE invoices SET payment_total = invoice_total * 0.5, payment_date = due_date WHERE payment_date IS NULL
+=>UPDATE oredrs SET comments = 'Gols Customer' WHERE customer_id iN (SELECT customer_id FROM Customers WHERE points > 3000)
+
+DELETING ROWS:
+DELETE FROM invoices WHERE client_id = 2
+DELETE FROM invoices client_id = (SELECT * FROM clients WHERE name = 'Myworks') - Deleting the rows by using the subquery.
+
+RESTORING THE DATABASE:
