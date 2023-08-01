@@ -1,0 +1,16 @@
+PySpark
+Introduction:
+*For Example if we are having the data of 128GB but the local machine is having 64GB of RAM. We cannot load that data and do necessary operation on that data. 
+*To overcome this issue we use Distributed systems to preprocess the data. That's where we use this PySpark.
+*It is faster
+Installtion:
+*We can install this library using below command.
+  =>pip install pyspark
+  	=>If we face the java error, need to follow below command
+  		=>sudo apt-get install openjdk-11-jdk
+
+DATA BRICKS:
+*If we have huge amount of data, we use distributed data processors to distribute the date by using the Data Bricks.
+*It actually helps us to do data engineering i.e. Big Data analysis , execute Machine Learning Algorithms and any kind of Data Science problem statements.
+
+  		

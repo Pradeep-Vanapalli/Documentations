@@ -1,0 +1,25 @@
+Face_Recognition on server
+
+Stage1: Access the image directory:
+	=>To login to the Images Server in 74, use below command
+		sudo docker exec -it spotsign-server /bin/bash
+		cd cd /var/www/html/spotsignassets/images/employees
+
+	=>In order to access the image directory from container to the host, use below command
+		docker cp <container ID>:/file/path/within/container /host/path/target
+		Sol Link:https://stackoverflow.com/questions/22049212/docker-copying-files-from-docker-container-to-host
+
+	=>To mount the file from one host to other host, use below command
+		sudo sshfs -o allow_other tecmint@x.x.x.x:/home/tecmint/ /mnt/tecmint
+		Note:Before running command,need to install sshfs
+		Sol Link:https://www.tecmint.com/sshfs-mount-remote-linux-filesystem-directory-using-ssh/
+		
+	=>To login to the MySql server, use below commands
+		sudo docker exec -it mysql /bin/bash
+		pswd:123!@#
+		mysql -u root -p
+		pswd:spotsign@123!
+		use spotsign_demo_seafoods;	
+		select * from tbl_emp_profiles;
+	
+	

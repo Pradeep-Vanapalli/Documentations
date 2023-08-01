@@ -1,0 +1,70 @@
+Sensor Fault Detection setup
+
+PROJECT SETUP:
+
+step 1: Creeate repository
+
+step 2: create conda environment(conda create -p venv python==3.8 -y)
+
+step 3: activate conda environment(conda activate venv/)
+
+step 4: create "setup.py "file - To create packages/libraries and to avoid the errors like 'No module found' and to install the any folder with python code can be installed as apackage.
+		
+		Package : Collection of modules is called pacakge.
+
+		Framework : Collection of packages/libraries
+
+step 5: create a package with the folder named sensor(Package).
+
+step 6: create init.py file under sensor(Package).
+
+step 7: Create "requirement.txt" file - To install all required libraries at a time.
+
+step 8: Write a code in "setup.py" file and excute .py file with the command "python setup.py install".
+
+step 9: Need to include -e . in the "requrements.txt" file - This is to install all python packages and the __init__.py file as package/library.
+		
+		Command : pip install -r requirements.txt - It will search for setup.py first and then install all the packages.
+
+		* If -e . not included to call setup.py - We can use the command "python setup.py install".
+
+step 10: Need to create "pipeline" package inside sensor package.
+			
+		Pipeline : The sequence of steps in the project.
+
+		* We will be having training and prediction pipeline in any ML/DL projects.
+
+step 11: Create "components" folder inside the sensor package - This is useful for the pipeline. In this will create stages and steps of ML what we are going to do in the project.
+
+step 12: Create folder name as "data_access" inside the sensor - This is to communicate with the Mangodb and create csv file.
+	
+		Question : What is the difference between Object Storage and File Storage?	
+
+					* File Storage : File storage is organized into a strict tree-like hierarchy with directories, sub-directories, and so on. To access a stored file, you must follow a specific path to it.
+
+					* Object Storage : Object storage, on the other hand, is stored in a “flat” address space. Each stored object has a unique identifier plus detailed metadata that makes it easy to find among potentially billions of other objects.
+
+step 13: Create folder inside the sensor named as "cloud storage" - This is used to download the file from cloud and export files to cloud, how to save the model to s3 bucket and all.
+
+step 14: Create "configuration" folder inside the sensor folder - This is used centralize all the configurations/connections like how to connect with mangodb and how to connect with s3 Bucket.
+
+step 15: Create "constant" folder inside the sensor folder - This is used to store the names of the files, names of the models, names of the pickle files. Simply it is for variable declaration.
+
+step 16: Create "logger.py" and "exception.py" files inside the sensor folder - To check any excetions while running the code. This helps us to fix the bugs very fast.
+
+step 17: Create "entity" folder inside the sensor folder - This is used to define the input and output of the each component and for pipeline as well. 
+
+step 18: Create file name as "artifact_entity.py" inside the entity
+
+		Artifact: This is the term that describes the ouput(fully trained model, checkpoint or a file) created by the training process. Simply the output of every component.
+
+step 19: Create a "config_entity.py" file inside the entity folder - This is used to specify what input need to give to each component and where we need to collect or store the input data.
+
+step 20: Create a "ml" folder inside the sensor folder - This is used for the purpose of ML related processes like to customize the ML algorithms, to save the scores or customize loss function or custom graphs.	
+
+
+DATABASE CONNECTION:
+
+step 21: Create a "database.py" file inside the "constant" folder for database connection.
+step 22: Create a "mongodb_connection.py" inside the "configuration" folder - To connect with mongodb.
+

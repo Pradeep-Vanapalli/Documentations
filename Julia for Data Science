@@ -1,0 +1,17 @@
+Julia for Data Science
+
+GitHub Link : https://github.com/JuliaAcademy/DataScience.git
+
+DEPENDENCY SETUP:
+	1. Open Julia in Terminal.
+	2. Type ";" to go to shell mode.
+	3. Go to the current directory.
+	4. click on delete key to get back to Julia terminal.
+	5. Type "]" to go to Pkg manager.
+	6. Type "activate ." - To activate the current directory and which will creates the environment.
+	7. Type "status" - To check what are all packages need to download.
+	8. Type "instantiate" - To download all packages
+	9. If we face any error related to ENV variable - Need to use this commands one by one
+		* ENV["R_HOME"] = "*"
+		* using Pkg
+		* Pkg.build("package_name")

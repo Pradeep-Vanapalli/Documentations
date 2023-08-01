@@ -1,0 +1,482 @@
+Julia
+
+* Julia is the General purpose programming langauge, high performance language and easy to use.
+
+Julia Documentation:
+	Reference Link: https://docs.julialang.org/en/v1/
+
+INSTALLATION OF JULIA:
+	* wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.1-linux-x86_64.tar.gz
+	* tar zxvf julia-1.8.1-linux-x86_64.tar.gz
+	* Adding Julia to the path in .bashrc
+		- . . .
+		- export PATH="$PATH:/home/sammy/julia-1.8.1/bin"
+
+	* Running the Julia REPL
+		- julia
+
+	* Rreference Link : https://www.digitalocean.com/community/tutorials/how-to-install-julia-programming-language-on-ubuntu-22-04
+
+INSTALLATION OF IJULIA:
+	* Open Julia REPL.
+	* enter "]"
+	* enter "add IJulia"
+	* Lots of installation stuff happens and then "^C" (control-C) to get out of the package manager.
+	* enter "using IJulia"
+	* enter "notebook()"
+	* Jupyter Notebook will open.
+	* We can just install julia in VSCode as well.
+
+GETTING STARTED:
+	1. How to print:
+		* We use println("s")
+	2. How to assign variables
+		* We use a = 1 - To assign variable
+		* We use tyepof(a) - To check the type of the variable
+	3. How to comment
+		* We use # - For single line 
+		* We i=use #= =# - For multiple line
+	4. Syntax for basic math
+		* We use basic Operends like +, -, *, /, ^, %
+
+	Note: To type a emoji in the code we have to folow below syntax.
+		Syntax : \:smi + <tab> ----> select with drop down + <enter> ----> <tab> + <enter> to complete
+		+ Julia allows us to write a super generic code, and 😸 is an example of this.
+
+	5. Use below link to check the basic conversion
+
+		reference Link : https://docs.julialang.org/en/v1/base/base/#Base.convert
+
+	STRINGS:
+		1. How to get a string
+			s1 = "I am a string."
+			s2 = """I am also a sring."""
+			
+			Note: 
+				+ There are a couple of functional diffrences between strings enclosed in single and triple quotes.
+				+ One Diffrence is that, in the latter case, you can use quotation marks within your string.
+
+				Eg 1: "Here, we get an "error" because it's ambiguous where this string is having single quoted string inside single quoyted string" - We get an error.
+				Eg 2: """Look, Man, no "errors"!!!""" - This is the correct syntax.
+
+			+ Note that '' define a character but NOT a string!
+				Eg 1: typeof('a') - Ouput is char
+				Eg 2: 'We will get an error here' - We need to use double quotes to acces as a string for a sentence.
+
+		2. String interpolation
+			* We can use the $ sign to insert existing variables into a string and to evaluate expressions within a string.
+			* Below is an example that contains some highly sensitive personal information.
+			Eg: name = "Pradeep"
+				println("My name is $name")
+
+		3. String concatenation
+			* Below are three ways we can concatenate strings!!!
+				1. string()
+					Eg: string("My name is Pradeep ", "and I am single")
+					Eg: string("I am working in InnData from ", 2 , " years after Accenture")
+
+				2. using *
+					Eg: s3 = "My name is pradeep ";
+						s4 = "and I am single";	
+						s3*s4
+
+				3. using string concatenation
+					Eg: s3 = "My name is pradeep ";
+						s4 = "and I am single";	
+						"$s3$s4"
+
+
+	DATA STRUCTURES:
+		
+		* Once We start working with many peices of data at once, It will be convenient for us to store data in structures like arrays or dictionaries(rather than just relying on variables).
+
+		* Types of Data Structures covered:
+			1. Dictionaries
+			2. Tuples
+			3. Arrays
+
+		* As an overview, tuples and arrays are both ordered sequence of elements(so we can index into them). 
+ 		* Dictionaries and arrays are both mutable.
+
+ 		DICTIONARIES:
+
+ 			* If we have sets of data related to one another, we may choose to store that data in a dictionary. A good example is a contact list, where we associate names with phone numbers.
+ 				Eg: myphonebook = Dict("Pradeep" => "12345", "Pardhu" => "56789")
+
+ 				+ We can add another entry to this dictionary as fallows.
+ 				Eg: myphonebook["Ravi"] = "234556".
+
+ 				+ In this example, each name and number is a "key" and "value" pair. We can grab the number using associated key.
+ 				Eg: myphonebook["Pradeep"]
+
+ 				+ We can also get values of key and simultaneously delete them from our contact list - by using pop!
+ 				Eg: pop!(myphonebook, "Ravi")
+
+ 				NOTE: Unlike tuples and arrays, dictionaries are not ordered. So, we can't index into them.
+
+ 		TUPLES:
+
+ 			* We can create a tuple by enclosing an ordered sequence of elements in ( ).
+ 			Eg: courses = ("AI", "Data Science", "Big Data")
+
+ 			* We can index into this tuple
+			* Indexing starts from 1 not from 0
+			Eg: courses[1]
+
+			* But since tuples are immutable, we can't update it.
+			Eg: courses[1] = "Stats"
+
+		ARRAYS:
+
+			* Unlike tuples, arrays are mutable. Unlike dictionaries, arrays contain ordered sequence of elements.
+			* We can create an array by enlosing this sequence of elements in [ ].
+			Eg: inndata = ["Pradeep", "Murali", "Ravi", "Anish"]
+
+			* or to store sequence of numbers.
+			Eg: fibonacci = [1, 1, 2, 3, 5, 8, 13]
+			Eg: mixed = [1, 2, 3.0, "mix"]
+
+			* - Once we hava an array, we can grab individual pieces of data from inside that array by indexing into the array. For example, if we want the third element listed in the inndata,
+			Eg: inndata[3]
+
+			* We can use indexing to edit an existing element of an array 
+			Eg: inndata[3] = "Ravi Teja"
+
+			* We can also edit the array by using the push! and pop! functions. push! adds the an element to end of an array and pop! removes the last element of an array.
+			* We can add another number to fibonacci sequence
+			Eg: push!(fibonacci, 21)
+
+			* and then remove it  
+			Eg: pop!(fibonacci)
+
+			* So far we have seen examples of only 1D arays of scalars, but  arrays can have an arbitary number of dimensions and can also store other arrays.
+			* For example, the following are arrays of arrays:
+			Eg: employees = [["Pradeep", "Anish", "Prameela"], ["AI", "DS", "DE"]]
+			Eg: numbers = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
+
+			* Below are examples of 2D and 3D arrays populated with random values.
+			Eg: rand(4, 3)
+			Eg: rand(4, 3, 2)
+
+
+		LOOPS:
+			1. while Loop
+				The syntax for while is,
+        
+        		while *condition*
+            		*loop body*
+        		end
+
+				* For example, we could use while to count or to iterate over an array.
+
+				Eg: n = 0 
+					while n < 10
+					    n += 1
+					    println(n)
+					end
+
+
+				Eg: myfriends = ["Pradeep", "Anish", "Prameela", "Murali"]
+
+					i = 1
+					while i <= length(myfriends)
+					    friend = myfriends[i]
+					    println("Hi $friend, it's great to see you!")
+					    i += 1
+					end
+
+			2. for Loop
+				The syntax for a for loop is,  
+        
+		        for *var* in *loop iterable*
+		            *loop body*
+		        end
+        
+				* we could use a for loop to generate the same results as either of the examples above:
+				Eg: #a = range(1, 10)
+					for n in 1:10
+					    println(n)
+					end
+
+				Eg: myfriends = ["Pradeep", "Anish", "Prameela", "Murali"]
+
+					for friend in myfriends
+					    println("Hi $friend, it's great to see you!")
+					end
+
+				* Note that we can replace in with either = or E
+				Eg: for n = 1:10
+					    println(n)
+					end
+
+				Eg: for n E 1:10
+					    println(n)
+					end
+
+				* Now let's use for loops to create some addition tables, where the value of every entry is the sum of it's row and column indices.
+				* First we initialize an array with zeros.
+				Eg: m, n = 5, 5
+					A = zeros(m, n)
+
+					for i in 1:m
+					    for j in 1:n
+					        A[i, j] = i + j
+					    end 
+					end
+					A
+
+				* Here's some syntactic sugar for the same nested for loop.
+				Eg: B = zeros(m, n)
+
+				for i in 1:m, j in 1:n
+				    B[i, j] = i + j
+				end
+				B
+
+				* The more "julia" way to create this addition table would have been with an array comprehension.
+				Eg: c = [i + j for i in 1:m, j in 1:n]
+
+				* In the next example, we embed an array comprehension in a for loop, generating addition tables of growing size.
+				Eg: for n in 1:10
+					    A = [i + j for i in 1:n, j in 1:n]
+					    display(A)
+					end
+
+		CONDITIONALS:
+
+			In Julia, the syntax is,
+    
+			    if *condition 1*
+			        *option 1*
+			    elseif *condition 2*
+			        *option 2*
+			    else
+			        *option 3*
+			    end
+
+			allows us to conditionally evaluate one of our options.
+
+			For example, we might want to compare the size of two numbers.
+			Eg:
+
+			x = 40
+			y = 50
+
+			if x > y
+			    println("$x is larger than $y")
+			elseif y > x
+			    println("$y is larger than $x")
+			else
+			    println("$x and $y are equal!")
+			end
+
+			* Let's say we want to return the larger of the two numbers
+			Eg: if x > y
+				    x
+				else 
+				    y
+				end
+			
+			* For this last block, we could instead use the ternary operator with the syntax
+
+				a ? b : c
+
+				which equates to 
+
+				    if a
+				        b
+				    else 
+				        c
+				    end
+			Eg: (x > y) ? x : y
+
+			* A fun related trick is short-circuit evaluation with the syntax
+
+				a && b
+			Eg: (x > y) && println("$x is larger than $y")
+			Eg: (x < y) && println("$x is smaller than $y")
+
+			NOTE:
+			+ When we use &&, b executes only if a evaluates to true.
+			+ If a evaluates to false, the expression a && b returns false.
+
+		FUNCTIONS:
+			1. How to declare a function
+				* Julia gives us a few different ways to write a function. The first requires the function and end keywords.
+				Eg: function sayhi(name)
+					    println("Hi $name, It's great to see you!")
+					end
+
+					sayhi("Pradeep")
+
+				Eg: function f(x)
+					    x^2
+					end
+
+					f(25)
+
+				* Alterantively, we could have declared either of these functions in a single line.
+				Eg: sayhi2(name) = println("Hi $name, It's great to see you!")
+					sayhi2("Pradeep")
+
+				Eg: f2(x) = x^3
+					f2(25)
+
+				* Finally, we could have declared these as "anonymous" functions.
+				Eg: sayhi3 = name -> println("Hi $name, It's great to see you!")
+					sayhi3("Raja")
+
+				Eg: f3 = x -> x^3
+					f3(9)
+
+			2. Duck-typing in Julia
+				* "If it quacks like a duck, it's a duck."
+
+				* Julia functions will just work on whetever inputs make sense.
+
+				* For example, sayhi works on the name of this minor tv character, written as an integer...
+
+				Eg: function sayhi(name)
+					    println("Hi $name, It's great to see you!")
+					end
+
+					sayhi(12345)
+
+				* And f works on matrix.
+				Eg: A = rand(3, 3)
+					A
+
+					f(A)
+
+				* On the other hand, f will not work on a vector. Unlike A^2, which is well defined, the meaning of v^2 for a vector, v, is ambiguous.
+				Eg: v = rand(3)
+					f(v) -  throw an error.
+
+			3. Mutating vs non-mutating functions
+				* By convention, functions followed by ! alter their contents and functions lacking ! do not.
+
+				* For example, let's look at the difference between sort and sort!.
+
+				Eg: v = [10, 45, 1, 4, 235]
+					sort(v)
+					v
+
+					==> sort(v) returns a sorted array that contains the same elements as v, but v is  left unchanged.
+
+				* On the other hand, when we run sort!(v), the contents of v are sorted within array v.
+				Eg: sort!(v)
+					v
+
+			4. Broadcasting
+
+				* By placing a . between any function name and its argument list, 
+    				
+    				+ we tell that function to braodcast over the elements of the input objects.
+
+    				+ Let's look at the dufference in behavior between f() and f.().
+        
+    				+ First we will define a new matrix A that will make the difference easier to illustrate.               
+
+    			Eg: A = [i + 3*j for j in 0:2, i in 1:3]
+    				f(A)
+
+    			*As before we see that for a matrix, A, 
+    
+    				f(A) = A^2 = A * A
+
+				* f.(A) on the other hand  will return an object that holds the sequence of A[i, j] at its correspinding entry.
+				Eg: B = f.(A)
+
+				* This means that, for vector v, f.(v) is defined, though f(v) is not
+				Eg: v = [1, 2, 4]
+					f(v) - throw an error
+					f.(v) - will work
+
+
+		PACKAGES:
+			* Julia has over 5000 registered packages, making packages a huge part of the Julia ecosystem.
+
+			* Even so, the package ecosystem still has some growing to do. Notably, we have first class function calls to other languages, providing excellent foreign function interfaces. We can easily call into python or R, for example, with Pycall, Rcall.
+
+			* This means that we don't have to wait until the julia ecosystem is fully mature, that moving to Julia doesn't mean you have to give up your favourite package/library from another language!
+			                
+			* The first time you use a package on a given Julia installation, you need to use the package manager to explicitly add it.
+
+			Eg: using Pkg
+				Pkg.add("Example")
+
+				* Every time you use Julia(start a new session at the REPL, or open a notebook for the first time, for example), you load the package with the using keyword.
+
+				Eg: using Example
+
+			* When we go to Julia command Line:
+				* using Pkg
+				* Pkg.add("package_name")
+				* Using Package_name
+
+		PLOTTING:
+			* There are a few different ways to plot in Julia(including calling PyPlot).
+			Eg : #Pkg.add("Plots")
+				using Plots
+
+			* One of the advantage of Plots.jl is that allows us to seamlessly change backends. In this notebook, we'll try out the gr() and plotlyjs() backends.
+
+				+ First, let's generate some artificial data to plot!
+				Eg: x = -3:0.1:3
+					f(x) = x^2
+
+					y = f.(x)
+
+					- Now let's load the GR background.
+
+					gr()
+
+					plot(x, y, label = "line")
+					scatter!(x, y, label = "points")
+
+				+ The ! at the end of the scatter! function name makes scatter! a mutating function, indicating that the scattered points will be added onto the pre-existing plot.
+
+				+ In contrast, see what happens when you replace scatter! with the non-mutating function scatter.
+				Eg: plot(x, y, label = "line")
+					scatter(x, y, label = "points")
+
+			* Without changing syntax, we can try this with the plotlyjs() backend.
+				Eg: import Pkg
+					Pkg.add("PlotlyJS")
+					plotlyjs()
+
+					plot(x, y, label="line")
+					scatter!(x, y, label="points")
+
+					- And notice how this second plot differs from the first!
+
+					- Note: We can see the value of each point in the plotlyjs.
+
+			Getting slightly fancier:
+				* The syntax for adding titles and lables to your plots is pretty straightforward.
+
+				* This time, in the name of scientific inquiry, let's examine the relationship between the global temperature and the number of pirates between roughly 1860 and 2000.
+
+				Eg: globaltemperature = [14.4, 14.5, 14.8, 15.2, 15.5, 15.8]
+					numpirates = [45000, 25000, 15000, 5000, 400, 17]
+
+					#First, plot the data
+					plot(globaltemperature, numpirates, legend=false)
+					scatter!(globaltemperature, numpirates, legend=false)
+
+					#This reverses x axis we can see how the temp changes 
+					xflip!()
+
+					#Add titles and labels
+					xlabel!("Number of Pirates [Approximate]")
+					ylabel!("Global Temperature (c)")
+					title!("Influence of pirates population on global warming")
+
+				* To create a plot with subplots, we just name each of the individual subplots and then wrap those name, along with a layout specification, in another plot call.
+					Eg: p1 = plot(x, x)
+					p2 = plot(x, x.^2)
+					p3 = plot(x, x.^3)
+					p4 = plot(x, x.^4)
+					plot(p1,p2,p3,p4,layout=(2,2),legend=false)
+
+		

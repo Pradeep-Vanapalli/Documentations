@@ -1,0 +1,306 @@
+MARS CHACOS PROJECT DOCUMENTATION
+
+PROBLEM STATEMENT:
+*Mars Chacos are having different types of food feeds related to Dogs and other pets. The main motto is to demonstrate the total sales for particular product under particular retailer in the future periods based on the historical sales.
+
+STRATEGY:
+*To understand the data better and forecast the future demand, the strategy is to split the total data into different microsegments based on the Product type and Retailer type in the particular Month/Period. So that we can get the total demand in that particular month/period.
+
+MICROSEGMENT:
+*The microsegment is the combination of the unique product type to the unique reatiler type.
+
+DATA DESCRIPTION:
+	+ It is the sales data from the Mars Chacos client in the .csv format.
+	+ In the sales data we can see the details related to Distributor, Retailer, Salesman, Product Type, Inv_Date, Inv_Qty, Selling_Rate, MRP, Gross_Amount and period.
+	+ By using these features we need to forecast the future sales.
+	+ The other data we have gathered from the client is related to the Product types. The file name is Product_Master. This is the data is having the STD_Codes related to the particular Product type.
+	Product_Master : To refer the STD_Code related to the particular product code. 
+
+TOOLS USED:
+	+ Zeppelin
+	+ Jupyter Notebook
+	+ Python
+	+ ML Time Series Models
+	+ Mocrosoft Excel
+
+PRACTICAL IMPLEMENTATION:
+
+	READING THE DATA:
+		+ Read the sales file and Product_Master file by using pandas library.
+
+	DATA PRE-PROCESSING:
+		+ Dropped unnecessary rows which are having 'Transaction Type' is 'Salesreturn' as per client instruction. So that we can eliminate the unnecessary data.
+
+		STD_CODE FROM PRODUCT_MASTER FILE AND PRODUCT_CODE FROM SALES FILE MAPPING:
+			WHY: The product codes are changing for the same product over a time. So to get the unique product type, we have to map the product codes which are having respective STD_Codes in the Product master file with the product codes in sales file.
+
+			TYPE CONVERSION:
+			+ Changed all the Product_Code and STD_Codes into the string format.
+
+
+			PRE-PROCESSING ON THE STD_CODE AND PRODUCT_CODE IN THE BOTH FILES:
+			+ Checking Product Code which are having null values in the STD code feature and Checking if they are in the Sales file.
+			+ Checking for the product code which are in sales file and not in product master file. I can see results with 3 product codes, dropped records in sales file as there is no Std codes for the product codes.
+
+			MAPPING:
+			+ So everything looks clean, now mapped the STD_Codes with Product Codes.
+
+		IMPORTANT FEATURES:
+			+ Inv_Date
+			+ STD_Code 
+			+ Retailer Code
+			+ Inv_Qty
+			+ Selling_Rate
+			+ MRP
+			+ Purchase_Price
+			+ Gross_Amount
+			+ Period
+			+ financial_year
+
+		DERIVING NEW FEATURES FROM EXISTING FEATURES:
+
+			* Discount = MRP - Selling Rate
+			* Revenue  = Selling Rate * Inv_Qty
+			* Profit   = Selling Rate - Purchase Price
+
+		CHECKING THE NULLS AND MISSING VALUES:
+			+ Checked the missing values and nulls in the data.
+
+		GROUPBY AND AGGREGATION AT MONTH LEVEL:
+			+ GROUPBY:
+				* Done groupby on the features STD_Code and Retailer Code on monthly basis. This is the step will derive the microsegments.
+
+			+ AGGREAGTION:
+				* Applied aggregation on the Dimensions Inv_Qty as sum, Selling_Rate as Average, MRP as average, Gross_Amount as sum, Purchase_Price as average, Profit as sum, Discount as sum and Revenue as sum.
+
+			Inference: From the above operation we get the microsegment data at month level with aggregations of required dimensions.
+
+			+ Saved the aggreated data into .csv file.
+
+		MICROSEGMENT COUNT:
+			+ Done counting the data points for each microsegment and saved the data into .csv file.
+
+
+		GROUPBY AND AGGREGATION AT PERIOD LEVEL:
+
+			Periods: We have total 13 different periods names P1, P2, P3, P4,......, P13
+
+			PRE-PROCESSING:
+				* Replaced the P1 with 01, P2 with 02, P3 with 03 as upto P13.
+				* Concatenate financial year and period, we will get the period in the form of 2021-01, 2022-02...etc.
+				* The period has been converted in this format becuase to get the data in such way that the period in Ascending Order. So that Time Series model understands the data at period level.
+
+			+ GROUPBY:
+				* Done groupby on the features STD_Code and Retailer Code on period basis. This is the step will derive the microsegments.
+
+			+ AGGREAGTION:
+				* Applied aggregation on the Dimensions Inv_Qty as sum, Selling_Rate as Average, MRP as average, Gross_Amount as sum, Purchase_Price as average, Profit as sum, Discount as sum and Revenue as sum.
+
+			Inference: From the above operation we get the microsegment data at period level with aggregations of required dimensions.
+
+			+ Saved the aggreated data into .csv file.
+
+			+ REMOVING THE DATA:
+				* Removed the 2022-P9 data as we dont have the complete data for all microsegements.
+
+		MICROSEGMENT COUNT:
+			+ Done counting the data points for each microsegment and saved the data into .csv file.
+
+		SPLITTING BUCKETS:
+			+ Bucket - 1 : The microsegments which are having equal to or more then 40 records
+			+ Bucket - 2 : The microsegments which are having equal to or more then 30 records and less then 40 records
+			+ Bucket - 3 : The microsegments which are having equal to or more then 20 records and less then 30 records
+			+ Bucket - 4 : The microsegments which are having equal to or more then 10 records and less then 20 records
+			+ Bucket - 5 : The microsegments which are having less then 10 records
+
+HANDLING OUTLIERS: 
+	+ Removed outliers at microsegment level as follows,
+		Higher Limit = Data.mean() + 1.5 * Data.standard_deviation
+		Lower Limit = Data.mean() - 1.5 * Data.standard_deviation
+
+MODEL BUILDING:
+
+	ARIMA Model:
+	
+	DATA STATIONARY CHECK:
+		+ Used ADF test to check the data is stationary. This is the statistical test to find out stationary of the data.
+			* If the p-values is <=0.05 the data is stationary. Otherwsie we need to find 1st difference on the data to be stationary.
+			* We need to perform the ADF test again on the differenced data to check the stationary.
+			* By this method we can find out the parameter 'd' value.
+
+		WHY: When we forecast the future results that should not chnage over a period of time. So we need the stationary data that decides by the parameter 'd'.
+
+	MODEL PARAMETERS: p, d, p
+		Parameter p : This is the parameter where we can find the number of Auto-Regression Terms. 
+					  This can be find out by using the PACF (Partial Autocorrelation graph)
+
+		Parameter q : This is the parameter where we can find the number of lagged forecast errors in the prediction equation.
+					  This can be find out by using the ACF (Autocorrelation graph)
+
+		Parameter d : 'd' is the number of nonseasonal differences needed for stationarity  
+
+
+	BEST PARAMS FINDING:
+		+ Splitted the data into Train and Test.
+		+ And Taken the p,d and q with some range.
+		+ Applied the ARIMA model on the train data and done evaluation on the test data.
+		+ The metric used for the model evaluation is MAPE.
+		+ Which ever combination of (p, d, q) is giving less MAPE, I am considering as that is the best params for that particular microsegment.
+		+ This practice has been done for each microsegment which is in each Bucket separately upto Bucket - 4.
+		+ Recorded all the best_params to the respected microsegments.
+		+ These are the best_params found at Month level.
+
+	FORECASTING AT PERIOD LEVEL FOR 4 BUCKETS:
+		Attempt - 1 Forecasting:
+			+ I have used the Month Level Best Params to forecast the future sales.
+			+ So, we have the data for 2019, 2020, 2021(upto P13) and 2022(upto P8). Done forecasting for the periods 2022-P9, 2022-P10, 2022-P11.
+			+ Applied the ARIMA model on complete microsegment level data for each microsegment and Done forecasting for 2022-P9, 2022-P10, 2022-P11.
+			+ This practice has been done for all 4 Buckets.
+
+			Issues: 
+				- Found that the best params might not be giving good results as we are applying on the Period level. 
+				- There may be the different data distribution for each microsegment when we compared month to period.
+				- Huge numbers, negative numbers and nulls found in forecasts.
+
+		Attempt - 2 Forecasting:
+			+ I have found the best params at period level to forecast the future forecasts.
+			+ Applied ARIMA with the new best params to find the future forecasts.
+			+ This practice has been done for all 4 Buckets.
+
+			Issues:
+				- Still Huge numbers, negative numbers and nulls found in forecasts.
+
+		Attempt - 3 Forecasting:
+			+ I have generated the Month level forecasts with the Month level best params and period level forecasts with the period level best params.
+			+ Merged the both results on the basis of Prtiod, STD_Code and Retialer Code.
+			+ If we have any nulls, negatives and huge numbers in the period level forecasts replaced with the month level forecasts.
+			+ This practice has been done for all 4 Buckets.
+
+			Issues:
+				- Still a few Huge numbers, negative numbers and nulls found in forecasts but they have reduced when compared to Attempt - 2.
+
+	FORECASTING FOR BUCKET -5:
+		* I have applied the growth rate formula to find out the forecasts for bucket-5 microsegments.
+
+			Default Ratio:
+
+				2021 - Total = sum of all inv_qty for 2021-P1 to 2021-P8 for complete data 
+
+				2022 - Total = sum of all inv_qty for 2022-P1 to 2022-P8 for complete data
+
+				Default Ratio = 2022 - Total / 2021 - Total
+
+			Microsegment Level Ratio:
+
+				2021 - Total = sum of all inv_qty for 2021-P1 to 2021-P8 for particular microsegment data
+
+				2022 - Total = sum of all inv_qty for 2022-P1 to 2022-P8 for particular microsegment data
+
+				Ratio = 2022 - Total / 2021 - Total 
+
+			Extracting 2021-P9, P10 and P11:
+
+				I have extracted the 2021-P9, P10 and P11 inv_Qty values for each microsegment.
+
+				If the 2021 - Total = 0, considered that the ratio is Default Ratio.
+
+				If the 2021 - Total != 0, cosidered that the ratio is Microsegment Level Ratio.
+
+			Forecast:
+
+				If the 2021 - Total = 0,
+
+				2022-P9 = Inv_Qty of 2021 - P9 * Default ratio
+				2022-P10 = Inv_Qty of 2021 - P10 * Default ratio
+				2022-P11 = Inv_Qty of 2021 - P11 * Default ratio
+
+				If the 2021 - Total != 0,
+
+				2022-P9 = Inv_Qty of 2021 - P9 * Microsegment Level Ratio
+				2022-P10 = Inv_Qty of 2021 - P10 * Microsegment Level Ratio
+				2022-P11 = Inv_Qty of 2021 - P11 * Microsegment Level Ratio
+
+
+HANDLING THE FINAL RESULTS:
+	Attempt 1:
+		* We found the actual ratio of each microsegment and if that is greater then 3, we will not do anyting on that particular microsegment forecast results.
+		* If the actual ratio is less then 3, we need to replace with 1.19*2021-P9, 1.19*2021-P10, 1.19*2021-P11.
+		* This practice has been done for Bucket - 3 and 4.
+
+	Attempt 2:
+		* Found the 2021-P1 to P13 and 2022-P1 to P8 average for each microsegment in the Bucket - 5.
+		* Same as above for a few microsegments in Bucket -3 and Bucket - 4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

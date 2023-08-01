@@ -1,0 +1,34 @@
+LINUX
+
+What is Bootloader?
+Bootloader is the software that manages the boot process of the computer.
+
+What is the kernel?
++ Kernel is the core of the system which manages the CPU, memory and peripheral devices. 
+
++ It is the lowest level of OS.
+
+What is Init System?
++ This is the sub system that bootstraps the user space and charged with controlling daemons. 
+
++ Simply saying that whenever we are workign with any type of application we need to be processed or generated. So init takes care of that. 
+
++ Init system that manages the boot perocess once the initial boot handed from the bootloader.
+
+What is Daemon?
+These are the background services like printing and scheduling that may start of during boot or after logging into desktop.
+
+Graphical Server(X Server)?
++ This is the sub system that displays the graphics on the monitor. 
+
++ It is commonly referred as X Server.
+
+Desktop Environment:
++ This is actually looing like normal desktop. 
+
++ It includes built in applications like file manager, web browsers, configuration tools.
+
++ We are having GNOME, Xfce, KDE etc..
+
+Applications:
++ Linux is having a software like GNOME which quickly allows us to download the applications and install into one centralized location.
